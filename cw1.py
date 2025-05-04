@@ -36,7 +36,7 @@ def find_connected_components(graph): # from lab2, task 3
     components.sort(key=len, reverse=True)
     return components
 
-def randomize_graph(graph, iterations=500): #from lab2, task 2 (modified)
+def randomize_graph_and_ensure_connected(graph, iterations=500): #from lab2, task 2 (modified)
     for i in range(iterations):
         edges = list(graph.edges())
         edges_count = len(edges)
@@ -58,6 +58,7 @@ def randomize_graph(graph, iterations=500): #from lab2, task 2 (modified)
             return graph #new line
     return None #changed line
 
+
 def give_random_weights(graph, lowerbound, higerbound):
     for edge in graph.edges():
         graph.edges[edge]['weight']=random.randint(lowerbound,higerbound)
@@ -69,7 +70,7 @@ def random_connected_weighted_graph(n,l):
         return None
     for i in range(100):
         graph=random_graph_edges(n,l)
-        graph=randomize_graph(graph)
+        graph=randomize_graph_and_ensure_connected(graph)
         if graph is not None:
             break
     if graph is None:
@@ -90,7 +91,7 @@ def draw(graph: nx.Graph, name: str):
 def main():
     graph=random_connected_weighted_graph(6,10)
     if graph is not None:
-        draw(graph,"cw1")
+        draw(graph,"cw_1")
 
 if __name__ == "__main__":
     main()
