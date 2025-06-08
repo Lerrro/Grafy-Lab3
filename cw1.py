@@ -2,16 +2,21 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import random
 
-def random_graph_edges(n, l): #from lab 1, task 3
+
+def random_graph_edges(n, l):
     graph = nx.Graph()
-    nodes = list(range(n))
-    graph.add_nodes_from(nodes)
-    edges = set()
-    while len(edges) < l:
-        u, v = random.sample(nodes, 2)
-        if (u, v) not in edges and (v, u) not in edges:
-            edges.add((u, v))
-    graph.add_edges_from(edges)
+    graph.add_nodes_from(range(n))
+
+    # wszystkie możliwe unikalne krawędzie
+    all_possible_edges = []
+    for u in range(n):
+        for v in range(u + 1, n):
+            all_possible_edges.append((u, v))
+
+    # losowy wybór l krawędzi bez powtórzeń
+    chosen_edges = random.sample(all_possible_edges, l)
+
+    graph.add_edges_from(chosen_edges)
     return graph
 
 def find_connected_components(graph): # from lab2, task 3
@@ -75,7 +80,7 @@ def random_connected_weighted_graph(n,l):
             break
     if graph is None:
         return None
-    return give_random_weights(graph,1,11)
+    return give_random_weights(graph,1,10)
     
 def draw(graph: nx.Graph, name: str):
     pos = nx.circular_layout(graph)
